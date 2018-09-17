@@ -12,6 +12,7 @@ class PegawaiController extends Controller
         $no=1;
         $anggota = Anggota::all();
         return view('pegawai.anggota.index', ['anggota' => $anggota, 'no'=>$no ]);
+        //test
     }
 
     public function anggotaform()
