@@ -32,3 +32,4 @@ Route::get('/pemilik/paket/edittarif/{id}', 'PemilikController@edittarif')->name
 Route::get('/pemilik/paket/gettarif/{id}', 'PemilikController@gettarif')->name('paket.gettarif');
 Route::put('/pemilik/paket/updatetarif/{id}', 'PemilikController@updatetarif')->name('paket.updatetarif');
 Route::delete('/pemilik/paket/deletetarif/{id}', 'PemilikController@deletetarif')->name('paket.deletetarif');
+

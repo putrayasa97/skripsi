@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Anggota;
+use App\Model\PaketDetail;
 
 class PegawaiController extends Controller
 {
@@ -17,7 +18,9 @@ class PegawaiController extends Controller
 
     public function anggotaform()
     {
-        return view('pegawai.anggota.anggota_tambah');
+        $paketdtl=PaketDetail::orderBy('id_paket')->get();
+       // dd($paketdtl);
+        return view('pegawai.anggota.anggota_tambah',  ['paketdtl' => $paketdtl]);
     }
 
     public function anggotainsert(Request $request)
@@ -67,5 +70,6 @@ class PegawaiController extends Controller
         $anggota->delete();
 
         return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Dihapus !!');
-      }
+    }
+
 }

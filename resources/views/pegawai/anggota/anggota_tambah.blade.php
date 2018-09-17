@@ -12,7 +12,7 @@
       <br />
 
       <!--FORM-->
-      <form id="formAnggota" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" >
+      <form id="formAnggota" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row">
 
@@ -28,8 +28,7 @@
             <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tgl-lahir">Tanggal Lahir <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12 input-group date" id="myDatepicker">
-                <input id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" data-inputmask="'mask': '9999-99-99','placeholder':''" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="10" data-parsley-minlength-message="Tanggal Lahir Kurang"
-                data-parsley-validation-threshold="8" required  readonly="readonly" value="{{ date('Y-m-d')}}"/>
+              <input id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" data-inputmask="'mask': '9999-99-99','placeholder':''" placeholder="Tahun-Bulan-Tanggal" required  readonly="readonly" value="{{ date('Y-m-d') }}"/>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -73,15 +72,26 @@
             </div>
 
             <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jk">Paket Langganan<span class="required">*</span></label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jk">Paket Langganan <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12 input-group">
                   <select id="paket" name="paket" class="form-control" required>
                     <option value="">Pilih</option>
-                    <option value="0">Wanita</option>
-                    <option value="1">Pria</option>
+                    @foreach ($paketdtl as $paket)
+
+                  <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}}({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
+                    @endforeach
+
                   </select>
                 </div>
              </div>
+             <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="foto" >Foto <span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                  <div class="form-control">
+                    <input type="file" name="foto" id="foto" class=""  data-parsley-fileextension='jpg' data-parsley-trigger="keyup" required>
+                  </div>
+                </div>
+            </div>
 
           </div>
 
@@ -107,5 +117,21 @@
         ignoreReadonly: true,
         allowInputToggle: true
   });
+
+ window.Parsley.addValidator('fileextension', {
+  validateString: function(value, requirement) {
+    if (!window.FormData) {
+      alert('You are making all developpers in the world cringe. Upgrade your browser!');
+      return true;
+    }
+    var fileExtension = value.split('.').pop();
+    return fileExtension === requirement;
+  },
+  requirementType: 'string',
+  messages: {
+    en: 'Extension Foto Harus Format ".jpg"',
+    fr: 'Ce fichier est plus grand que %s Kb.'
+  }
+});
 </script>
 @endsection
