@@ -103,7 +103,7 @@ class PemilikController extends Controller
         $paketdtl=PaketDetail::find($id);
         $paketdtl->delete();
 
-        return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Dihapus !!');
-      }
+    return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Dihapus !!');
+    }
 
 }
