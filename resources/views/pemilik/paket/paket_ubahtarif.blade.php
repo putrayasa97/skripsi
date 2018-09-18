@@ -12,6 +12,7 @@
 
           <!--Table-->
           <a href="{{ route('paket')}}" class="btn btn-primary" data-dismiss="modal"><span class="fa fa-chevron-left"></span> Kembali</a><button title="Tambah" type="button" class="btn btn-success btn-md tambahTarif" data-toggle="modal" data-target="#tambah" value="{{ $paket->id_paket }}"><span class="fa fa-plus"></span> Tambah Tarif</button>
+          <div class="ln_solid"></div>
           <table id="datatable" class="table table-striped table-bordered">
             <thead>
               <tr>

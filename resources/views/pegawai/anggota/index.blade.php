@@ -16,7 +16,7 @@
               <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Alamat</th>
+                <th>Paket</th>
                 <th>Jenis Kelamin</th>
                 <th>Telp</th>
                 <th>Terdaftar</th>
@@ -28,8 +28,8 @@
               @foreach ($anggota as $ang)
                 <tr>
                   <td align="center">{{ $no++ }}</td>
-                  <td>{{ $ang->nm_ang }}</td>
-                  <td>{{ str_limit($ang->alamat, 15) }}</td>
+                  <td>{{ str_limit($ang->nm_ang, 15) }}</td>
+                  <td>{{ $ang->paketdtl->paket->nm_paket }}({{$ang->paketdtl->bulan }} Bulan) - Rp. {{number_format($ang->paketdtl->harga,0,',','.')}} ,-</td>
                   <td>
                   @if ($ang->jk==1)
                     Pria

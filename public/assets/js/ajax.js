@@ -7,7 +7,6 @@ $(document).ready(function(){
     }
 
 
-
     $('body').on('click', '.ubahAnggota', function () {
         var link_id = $(this).val();
         $.get('/pegawai/anggota/edit/' + link_id, function (anggotas) {
@@ -17,7 +16,9 @@ $(document).ready(function(){
             $('#formAnggotaEdit #jk').val(anggotas.jk);
             $('#formAnggotaEdit #pekerjaan').val(anggotas.pekerjaan);
             $('#formAnggotaEdit #tlp').val(anggotas.tlp);
+            $('#formAnggotaEdit #paket').val(anggotas.id_paketdtl);
             $('#formAnggotaEdit').attr('action','/pegawai/anggota/'+anggotas.id_ang);
+            $('#fotoAnggotaUbah').attr('src','/images/upload/foto_anggota/'+anggotas.foto);
         })
     });
     $('body').on('click', '.hapusAnggota', function () {
@@ -26,6 +27,7 @@ $(document).ready(function(){
             $('#AnggotaDelete').attr('action','/pegawai/anggota/delete/'+anggotas.id_ang);
         })
     });
+
     $('body').on('click', '.lihatAnggota', function () {
         var link_id = $(this).val();
         $.get('/pegawai/anggota/edit/' + link_id, function (anggotas) {
@@ -39,9 +41,9 @@ $(document).ready(function(){
             }
             $('#dpekerjaan').html(anggotas.pekerjaan);
             $('#dtlp').html(anggotas.tlp);
+            $('#fotoAnggota').attr('src','/images/upload/foto_anggota/'+anggotas.foto);
         })
-    });
-
+      });
 
 
     $('body').on('click', '.lihatPaket', function () {

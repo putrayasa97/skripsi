@@ -10,7 +10,8 @@
         </div>
         <div class="x_content">
         <button title="Tambah" type="button" class="btn btn-success" data-toggle="modal" data-target="#add"><span class="fa fa-plus"></span> Tambah Paket</button>
-          <!--Table-->
+        <div class="ln_solid"></div>
+        <!--Table-->
           <table id="datatable" class="table table-striped table-bordered">
             <thead>
               <tr>

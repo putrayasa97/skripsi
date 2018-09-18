@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 });
 Route::get('/pegawai/anggota', 'PegawaiController@anggota')->name('anggota');

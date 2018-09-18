@@ -13,7 +13,7 @@ class CreateTransaksiTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('tb_transaksi', function (Blueprint $table) {
             $table->increments('id_trans');
             $table->integer('id_paketdtl')->unsigned();
             $table->integer('id_ang')->unsigned();

@@ -8,7 +8,7 @@
         <div class="modal-body">
 
         <!--FORM-->
-        <form id="formAnggotaEdit" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" >
+        <form id="formAnggotaEdit" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" enctype="multipart/form-data">
           {{ csrf_field() }}
             <div class="item form-group ">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nama">Nama Lengkap <span class="required">*</span></label>
@@ -55,6 +55,27 @@
                 data-parsley-validation-threshold="10" required>
               </div>
             </div>
+            <div class="item form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="paket">Paket Langganan <span class="required">*</span></label>
+              <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                <select id="paket" name="paket" class="form-control" required>
+                  <option value="">Pilih</option>
+                  @foreach ($paketdtl as $paket)
+                    <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}}({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
+                  @endforeach
+
+                </select>
+              </div>
+           </div>
+           <div class="item form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="foto" >Foto <span class="required">*</span></label>
+              <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                <img id="fotoAnggotaUbah" src="" alt="" class="img-thumbnail img-responsive " width="100">
+                <div class="form-control">
+                  <input type="file" name="foto" id="foto" class=""  data-parsley-fileextension='jpg' data-parsley-trigger="keyup" required>
+                </div>
+              </div>
+          </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary" data-dismiss="modal">Batal</button>
@@ -76,5 +97,20 @@
         ignoreReadonly: true,
         allowInputToggle: true
   });
+  window.Parsley.addValidator('fileextension', {
+  validateString: function(value, requirement) {
+    if (!window.FormData) {
+      alert('You are making all developpers in the world cringe. Upgrade your browser!');
+      return true;
+    }
+    var fileExtension = value.split('.').pop();
+    return fileExtension === requirement;
+  },
+  requirementType: 'string',
+  messages: {
+    en: 'Extension Foto Harus Format ".jpg"',
+    fr: 'Ce fichier est plus grand que %s Kb.'
+  }
+});
 </script>
 @endsection

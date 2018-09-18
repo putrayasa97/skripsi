@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-md-4 col-xs-12">
                                 <center>
-                                    <img src="{{ asset('assets/images/img.jpg') }}" alt="" class="img-thumbnail img-responsive" width="250">
+                                    <img id="fotoAnggota" src="" alt="" class="img-thumbnail img-responsive" width="250">
                                 </center>
                                 <br>
                             </div>
@@ -54,3 +54,4 @@
         </div>
     </div>
 </div>
+

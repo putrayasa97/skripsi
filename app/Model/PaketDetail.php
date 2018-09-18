@@ -15,4 +15,8 @@ class PaketDetail extends Model
     {
         return $this->belongsTo('App\Model\Paket', 'id_paket');
     }
+    public function anggota()
+    {
+        return $this->belongsTo('App\Model\Anggota', 'id_anggota');
+    }
 }

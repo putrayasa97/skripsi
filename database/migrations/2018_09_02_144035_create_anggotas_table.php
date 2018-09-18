@@ -22,10 +22,13 @@ class CreateAnggotasTable extends Migration
             $table->string('pekerjaan', 100);
             $table->char('tlp', 15);
             $table->integer('status');
+            $table->text('foto');
+            $table->integer('id_paketdtl')->unsigned();
             $table->integer('id_user')->unsigned();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('tb_user');
+            $table->foreign('id_paketdtl')->references('id_paketdtl')->on('tb_paketdetail');
         });
     }
 

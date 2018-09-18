@@ -72,7 +72,7 @@
             </div>
 
             <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jk">Paket Langganan <span class="required">*</span></label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="paket">Paket Langganan <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12 input-group">
                   <select id="paket" name="paket" class="form-control" required>
                     <option value="">Pilih</option>
