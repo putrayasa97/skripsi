@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
-use Image;
+//use Image;
 
 use App\Model\Anggota;
 use App\Model\PaketDetail;
@@ -28,9 +29,11 @@ class PegawaiController extends Controller
 
     public function anggotainsert(Request $request)
     {
+        $now=Carbon::now('Asia/Singapore');
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
+        $paket=PaketDetail::find($request->paket);
         $anggotas = new Anggota;
         $anggotas->nm_ang = $request->nama;
         $anggotas->tgl_lahir = $request->tgl_lahir;
@@ -40,6 +43,9 @@ class PegawaiController extends Controller
         $anggotas->tlp = $request->tlp;
         $anggotas->status = 1;
         $anggotas->id_paketdtl = $request->paket;
+        $anggotas->date_actv = $now;
+        $expiry=(new Carbon($anggotas->date_actv))->addMonths($paket->bulan);
+        $anggotas->date_expiry = $expiry;
         $anggotas->id_user = 2;
 
         //upload foto
@@ -50,6 +56,8 @@ class PegawaiController extends Controller
         }
         $file->move('images/upload/foto_anggota/',$filename);
         $anggotas->foto=$filename;
+
+
 
         $anggotas->save();
 
@@ -103,6 +111,13 @@ class PegawaiController extends Controller
         $anggota->delete();
 
         return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Dihapus !!');
+    }
+
+    public function anggotaperpanjang(Request $request, $id){
+        $now=Carbon::now('Asia/Singapore');
+        //$anggota = Anggota::where('id_ang',$id);
+
+      return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
     }
 
 }

@@ -25,6 +25,8 @@ class CreateAnggotasTable extends Migration
             $table->text('foto');
             $table->integer('id_paketdtl')->unsigned();
             $table->integer('id_user')->unsigned();
+            $table->timestamp('date_actv')->nullable($value = true);
+            $table->timestamp('date_expiry')->nullable($value = true);
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('tb_user');

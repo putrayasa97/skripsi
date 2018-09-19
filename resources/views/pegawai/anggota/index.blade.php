@@ -31,13 +31,14 @@
                   <td>{{ str_limit($ang->nm_ang, 15)}}</td>
                   <td>{{ str_limit($ang->alamat, 15) }}</td>
                   <td>{{ $ang->paketdtl->paket->nm_paket }}({{$ang->paketdtl->bulan }} Bulan) - Rp. {{number_format($ang->paketdtl->harga,0,',','.')}} ,-</td>
-                  <td>{{ $ang->tlp}}</td>
-                  <td>{{ $ang->created_at->format('d M Y') }}</td>
-                  <td>@if ($ang->status==1)
+                  <td>{{ $ang->created_at->format('d F Y')}}</td>
+                  <td>{{ $ang->date_expiry->format('d F Y')}}</td>
+                  <td align="center">@if ($ang->status==1)
                     Aktif
                   @else
-                    Tidak Aktif
-                  @endif</td>
+                  <button title="Perpanjang" type="button" class="btn btn-danger btn-xs Perpanjang" data-toggle="modal" data-target="#perpanjang" value="{{ $ang->id_ang }}" >Perpanjang</button>
+                  @endiF
+                </td>
                   <td align="center">
                       <div class="btn-group">
                         <button title="Lihat" type="button" class="btn btn-info btn-xs lihatAnggota" data-toggle="modal" data-target="#detail" value="{{ $ang->id_ang }}" ><span class="fa fa-eye"></span></button>
@@ -58,4 +59,5 @@
   @include('pegawai.anggota.anggota_ubah')
   @include('pegawai.anggota.anggota_delete')
   @include('pegawai.anggota.anggota_detail')
+  @include('pegawai.anggota.perpanjang_paket')
 @endsection

@@ -45,6 +45,26 @@ $(document).ready(function(){
         })
       });
 
+      $('body').on('click', '.Perpanjang', function () {
+        var link_id = $(this).val();
+        $.get('/pegawai/anggota/edit/' + link_id, function (anggotas) {
+            $('#formPerpanjang #id_paket').val(anggotas.id_ang);
+            $('#pnama').html(anggotas.nm_ang);
+            $('#ptgl_lahir').html(anggotas.tgl_lahir);
+            $('#palamat').html(anggotas.alamat);
+            if (anggotas.jk==1) {
+                $('#pjk').html("Pria");
+            } else {
+                $('#pjk').html("Wanita");
+            }
+            $('#ppekerjaan').html(anggotas.pekerjaan);
+            $('#ptlp').html(anggotas.tlp);
+            $('#formPerpanjang #paket').val(anggotas.id_paketdtl);
+            $('#pfotoAnggota').attr('src','/images/upload/foto_anggota/'+anggotas.foto);
+            $('#formPerpanjang').attr('action','/pegawai/anggota/perpanjang/'+anggotas.id_ang);
+        })
+      });
+
 
     $('body').on('click', '.lihatPaket', function () {
 

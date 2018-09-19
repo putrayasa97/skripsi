@@ -20,6 +20,7 @@ Route::post('/pegawai/anggota/insert', 'PegawaiController@anggotainsert')->name(
 Route::get('/pegawai/anggota/edit/{id}', 'PegawaiController@anggotaedit')->name('anggota.edit');
 Route::put('/pegawai/anggota/{id}', 'PegawaiController@anggotaupdate')->name('anggota.update');
 Route::delete('/pegawai/anggota/delete/{id}', 'PegawaiController@anggotadelete')->name('anggota.delete');
+Route::put('/pegawai/anggota/perpanjang/{id}', 'PegawaiController@anggotaperpanjang')->name('anggota.perpanjang');
 
 Route::get('/pemilik/paket', 'PemilikController@paket')->name('paket');
 Route::post('/pemilik/paket/insert', 'PemilikController@paketinsert')->name('paket.insert');

@@ -55,18 +55,6 @@
                 data-parsley-validation-threshold="10" required>
               </div>
             </div>
-            <div class="item form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="paket">Paket Langganan <span class="required">*</span></label>
-              <div class="col-md-6 col-sm-6 col-xs-12 input-group">
-                <select id="paket" name="paket" class="form-control" required>
-                  <option value="">Pilih</option>
-                  @foreach ($paketdtl as $paket)
-                    <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}}({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
-                  @endforeach
-
-                </select>
-              </div>
-           </div>
            <div class="item form-group">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="foto" >Foto <span class="required">*</span></label>
               <div class="col-md-6 col-sm-6 col-xs-12 input-group">
