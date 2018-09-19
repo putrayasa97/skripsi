@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 
 use Image;
 
@@ -76,9 +73,10 @@ class PegawaiController extends Controller
         $anggota->jk=$request->jk;
         $anggota->pekerjaan=$request->pekerjaan;
         $anggota->tlp=$request->tlp;
+        $anggota->id_paketdtl=$request->paket;
         if (!empty($request->file('foto'))) {
-            unlink(public_path('images/upload/foto_anggota/'.$anggota->foto));
-            unlink(public_path('images/upload/foto_anggota/thumbs/'.$anggota->foto));
+            //unlink(public_path('images/upload/foto_anggota/'.$anggota->foto));
+            //unlink(public_path('images/upload/foto_anggota/thumbs/'.$anggota->foto));
 
             $file=$request->file('foto');
             $filename=uniqid().'.'.$file->getClientOriginalExtension();
@@ -87,13 +85,12 @@ class PegawaiController extends Controller
             }
             $file->move('images/upload/foto_anggota/',$filename);
 
-           if (!file_exists('images/upload/foto_anggota/thumbs')) {
-             mkdir('images/upload/foto_anggota/thumbs', 0777, true);
-           }
-           $thumb = Image::make('images/upload/foto_anggota/'.$filename)
-           ->resize(171, 180)
-           ->save('images/upload/foto_anggota/thumbs/'.$filename,100);
-
+          // if (!file_exists('images/upload/foto_anggota/thumbs')) {
+            // mkdir('images/upload/foto_anggota/thumbs', 0777, true);
+           //}
+          // $thumb = Image::make('images/upload/foto_anggota/'.$filename)
+          // ->resize(171, 180)
+           //->save('images/upload/foto_anggota/thumbs/'.$filename,100);
             $anggota->foto=$filename;
             }
         $anggota->save();

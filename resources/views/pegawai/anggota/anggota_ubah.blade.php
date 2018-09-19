@@ -72,7 +72,7 @@
               <div class="col-md-6 col-sm-6 col-xs-12 input-group">
                 <img id="fotoAnggotaUbah" src="" alt="" class="img-thumbnail img-responsive " width="100">
                 <div class="form-control">
-                  <input type="file" name="foto" id="foto" class=""  data-parsley-fileextension='jpg' data-parsley-trigger="keyup" required>
+                  <input type="file" name="foto" id="foto" class=""  data-parsley-fileextension='jpg' data-parsley-trigger="keyup">
                 </div>
               </div>
           </div>
