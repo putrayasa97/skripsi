@@ -65,7 +65,6 @@ $(document).ready(function(){
         })
       });
 
-
     $('body').on('click', '.lihatPaket', function () {
 
         var link_id = $(this).val();
@@ -85,6 +84,7 @@ $(document).ready(function(){
             });
         });
     });
+
     $('body').on('click', '.ubahPaket', function () {
         var link_id = $(this).val();
         $.get('/pemilik/paket/edit/' + link_id, function (paket) {
@@ -92,6 +92,7 @@ $(document).ready(function(){
             $('#formPaketUbah').attr('action','/pemilik/paket/'+paket.id_paket);
         })
     });
+
     $('body').on('click', '.hapusPaket', function () {
         var link_id = $(this).val();
         $.get('/pemilik/paket/edit/' + link_id, function (pakets) {
@@ -99,6 +100,7 @@ $(document).ready(function(){
             $('#PaketDelete').attr('action','/pemilik/paket/delete/'+pakets.id_paket);
         })
     });
+
     $('body').on('click', '.tambahTarif', function () {
 
         var link_id = $(this).val();
@@ -109,6 +111,7 @@ $(document).ready(function(){
         });
 
     });
+
     $('body').on('click', '.addTarif', function () {
         var link_id = $(this).val();
         $.get('/pemilik/paket/edit/' + link_id, function (paket) {
@@ -116,6 +119,7 @@ $(document).ready(function(){
 
         });
     });
+
     $('body').on('click', '.ubahTarif', function () {
         var link_id = $(this).val();
         $.get('/pemilik/paket/gettarif/' + link_id, function (tarifs) {
@@ -126,12 +130,22 @@ $(document).ready(function(){
             $('#formUbahTarif').attr('action','/pemilik/paket/updatetarif/'+tarifs.id_paketdtl);
         })
     });
+
     $('body').on('click', '.hapusTarif', function () {
         var link_id = $(this).val();
         $.get('/pemilik/paket/gettarif/' + link_id, function (tarifs) {
             //console.log(pakets);
             $('#TarifDelete #id_paket').val(tarifs.id_paket);
             $('#TarifDelete').attr('action','/pemilik/paket/deletetarif/'+tarifs.id_paketdtl);
+        })
+    });
+
+    $('body').on('click', '.ubahPerdatang', function () {
+        var link_id = $(this).val();
+        $.get('/pemilik/paket/getperdatang', function (perdatang) {
+            //console.log(perdatang);
+            $('#formPerdatangUbah #harga').val(perdatang[0].harga);
+            $('#formPerdatangUbah').attr('action','/pemilik/paket/updateperdatang/'+perdatang[0].id_paketdtl);
         })
     });
 });

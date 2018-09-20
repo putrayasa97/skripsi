@@ -20,7 +20,8 @@
       <ul class="nav side-menu">
         <li><a><i class="fa fa-home"></i> Anggota <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="{{ route('anggota.form') }}">Pendaftaran</a></li>
+            <li><a href="{{ route('anggota.form') }}">Form Anggota</a></li>
+            <li><a href="{{ route('anggota.nonform') }}">Form Non-Anggota</a></li>
             <li><a href="{{ route('anggota') }}">Daftar Anggota</a></li>
           </ul>
         </li>

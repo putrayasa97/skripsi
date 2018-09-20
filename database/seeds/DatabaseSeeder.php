@@ -27,5 +27,17 @@ class DatabaseSeeder extends Seeder
             ['username' => 'pemilik','email'=> 'pemilik@cloud.com','password'=>bcrypt('pemilik') ,'id_level' => '2'],
             ['username' => 'pegawai','email'=> 'pegawai@cloud.com','password'=>bcrypt('pegawai') ,'id_level' => '3'],
         ]);
+
+        DB::table('tb_paket')
+        ->insert([
+            ['nm_paket' => 'Perdatang'],
+            ['nm_paket' => 'Fitnes']
+        ]);
+
+        DB::table('tb_paketdetail')
+        ->insert([
+            ['harga' => 0,'bulan'=>0, 'id_paket'=>1, 'type_paket'=>0],
+            ['harga' => 50000,'bulan'=>1, 'id_paket'=>2, 'type_paket'=>1],
+        ]);
     }
 }

@@ -17,8 +17,7 @@ class CreatePaketTable extends Migration
             $table->increments('id_paket');
             $table->string('nm_paket');
             $table->timestamps();
-
-
+            $table->softDeletes();
         });
     }
 

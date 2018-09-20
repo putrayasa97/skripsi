@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 Route::get('/pegawai/anggota', 'PegawaiController@anggota')->name('anggota');
 Route::get('/pegawai/anggota/form', 'PegawaiController@anggotaform')->name('anggota.form');
+Route::get('/pegawai/anggota/nonform', 'PegawaiController@anggotanonform')->name('anggota.nonform');
+Route::post('/pegawai/anggota/insertnonanggota', 'PegawaiController@anggotanoninsert')->name('anggota.noninsert');
 Route::post('/pegawai/anggota/insert', 'PegawaiController@anggotainsert')->name('anggota.insert');
 Route::get('/pegawai/anggota/edit/{id}', 'PegawaiController@anggotaedit')->name('anggota.edit');
 Route::put('/pegawai/anggota/{id}', 'PegawaiController@anggotaupdate')->name('anggota.update');
@@ -33,4 +35,7 @@ Route::get('/pemilik/paket/edittarif/{id}', 'PemilikController@edittarif')->name
 Route::get('/pemilik/paket/gettarif/{id}', 'PemilikController@gettarif')->name('paket.gettarif');
 Route::put('/pemilik/paket/updatetarif/{id}', 'PemilikController@updatetarif')->name('paket.updatetarif');
 Route::delete('/pemilik/paket/deletetarif/{id}', 'PemilikController@deletetarif')->name('paket.deletetarif');
+Route::post('/pemilik/paket/insertperdatang', 'PemilikController@insertperdatang')->name('paket.insertperdatang');
+Route::get('/pemilik/paket/getperdatang', 'PemilikController@getperdatang')->name('paket.getperdatang');
+Route::put('/pemilik/paket/updateperdatang/{id}', 'PemilikController@updateperdatang')->name('paket.updateperdatang');
 
