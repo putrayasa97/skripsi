@@ -28,7 +28,7 @@
         <li><a><i class="fa fa-home"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{{ route('paket') }}">Paket</a></li>
-            <li><a href="index3.html">Pembayaran</a></li>
+            <li><a href="{{ route('transaksi') }}">Pembayaran</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-home"></i> Laporan </span></a></li>

@@ -152,7 +152,12 @@ class PegawaiController extends Controller
         $anggota->date_expiry=$expiry;
         $anggota->status=1;
         $anggota->save();
-      return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
+        return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
+    }
+
+    public function transaksi(){
+
+        return view('pegawai.transaksi.index');
     }
 
 }
