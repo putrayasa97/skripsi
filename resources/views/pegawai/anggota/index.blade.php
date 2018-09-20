@@ -31,7 +31,7 @@
                   <td>{{ str_limit($ang->nm_ang, 15)}}</td>
                   <td>{{ str_limit($ang->alamat, 15) }}</td>
                   <td>{{ $ang->paketdtl->paket->nm_paket }}({{$ang->paketdtl->bulan }} Bulan) - Rp. {{number_format($ang->paketdtl->harga,0,',','.')}} ,-</td>
-                  <td>{{ $ang->created_at->format('d F Y')}}</td>
+                  <td>{{ $ang->date_actv->format('d F Y')}}</td>
                   <td>{{ $ang->date_expiry->format('d F Y')}}</td>
                   <td align="center">@if ($ang->status==1)
                     Aktif

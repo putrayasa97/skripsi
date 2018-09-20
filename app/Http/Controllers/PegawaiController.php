@@ -115,8 +115,14 @@ class PegawaiController extends Controller
 
     public function anggotaperpanjang(Request $request, $id){
         $now=Carbon::now('Asia/Singapore');
-        //$anggota = Anggota::where('id_ang',$id);
-
+        $paket=PaketDetail::find($request->paket);
+        $anggota=Anggota::find($id);
+        $expiry=(new Carbon($now))->addMonths($paket->bulan);
+        $anggota->id_paketdtl=$request->paket;
+        $anggota->date_actv=$now;
+        $anggota->date_expiry=$expiry;
+        $anggota->status=1;
+        $anggota->save();
       return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
     }
 

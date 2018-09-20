@@ -49,7 +49,7 @@
                     </div>
                 </div>
             <!--FORM-->
-            <form id="formPerpanjang" class="form-horizontal form-label-left" action="{{ route('anggota.perpanjang') }}" data-parsley-validate method="post" >
+            <form id="formPerpanjang" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" >
                 {{ csrf_field() }}
                 <input type="hidden" id="id_paket" name="id_paket">
                 <div class="item form-group">
