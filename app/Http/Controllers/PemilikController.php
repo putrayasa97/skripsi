@@ -22,12 +22,13 @@ class PemilikController extends Controller
         }*/
         $count = PaketDetail::where('type_paket',0)->count();//menjumlahkan type paket nilai '0'
         //dd($count);
-        if(empty($count)){
-            $paketdtl = PaketDetail::where('type_paket','=',1)->get();//get type paket = 0
-        }else{
-            $paketdtl = PaketDetail::where('type_paket','=',0)->get();//get type paket = 0
-        }
+        if(!empty($count)){
+            $paketdtl = PaketDetail::where('type_paket','=',0)->get();//get type paket = 1
+        }//else{
+           // $paketdtl = PaketDetail::where('type_paket','=',0)->get();//get type paket = 0
+        //}
         $paket = Paket::where('nm_paket','!=','Perdatang')->get();//get paket tidak sama dengan Perdatang
+        $paketdtl = PaketDetail::where('type_paket','=',1)->get();
         return view('pemilik.paket.index', ['paket' => $paket, 'no'=>$no,  'getPerdatang'=>$paketdtl, 'count'=>$count]);
     }
 
