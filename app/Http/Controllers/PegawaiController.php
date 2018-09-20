@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 
 use App\Model\Anggota;
 use App\Model\PaketDetail;
+use App\Model\Transaksi;
 
 class PegawaiController extends Controller
 {
@@ -37,12 +38,14 @@ class PegawaiController extends Controller
 
     public function anggotainsert(Request $request)
     {
+        $id=date('y') . rand(0, 9999);
         $now=Carbon::now('Asia/Singapore');
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
         $paket=PaketDetail::find($request->paket);
         $anggotas = new Anggota;
+        $anggotas->no_ang = $id;
         $anggotas->nm_ang = $request->nama;
         $anggotas->tgl_lahir = $request->tgl_lahir;
         $anggotas->alamat = $request->alamat;
@@ -64,20 +67,26 @@ class PegawaiController extends Controller
         }
         $file->move('images/upload/foto_anggota/',$filename);
         $anggotas->foto=$filename;
-
-
-
         $anggotas->save();
-
+        //dd($id);
+        $get=Anggota::where('no_ang','=',$id)->first();
+        $trans = new Transaksi;
+        $trans->id_ang=$get->id_ang;
+        $trans->id_paketdtl=$request->paket;
+        $trans->harga = $paket->harga;
+        $trans->save();
     return redirect()->route('anggota.form')->with('success', 'Anggota Berhasil Terdaftar !!');
     }
 
     public function anggotanoninsert(Request $request)
     {
+        $id=date('y') . rand(0, 9999);
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
+        $paket=PaketDetail::find($request->paket);
         $anggotas = new Anggota;
+        $anggotas->no_ang = $id;
         $anggotas->nm_ang = $request->nama;
         $anggotas->tgl_lahir = $request->tgl_lahir;
         $anggotas->alamat = $request->alamat;
@@ -86,9 +95,17 @@ class PegawaiController extends Controller
         $anggotas->tlp = $request->tlp;
         $anggotas->status = 2;//status 2 = non-anggota
         $anggotas->id_user = 2;
-        $anggotas->id_paketdtl =  $request->id_paketdtl;
+        $anggotas->id_paketdtl = $request->paket;
         $anggotas->foto = "0";
         $anggotas->save();
+
+        $get=Anggota::where('no_ang','=',$id)->first();
+        $trans = new Transaksi;
+        $trans->id_ang=$get->id_ang;
+        $trans->id_paketdtl=$request->paket;
+        $trans->harga = $paket->harga;
+        $trans->save();
+
 
     return redirect()->route('anggota.nonform')->with('success', 'Anggota Berhasil Terdaftar !!');
     }

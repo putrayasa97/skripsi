@@ -36,14 +36,14 @@
                   <td align="center">@if ($ang->status==1)
                     Aktif
                   @else
-                  <button title="Perpanjang" type="button" class="btn btn-danger btn-xs Perpanjang" data-toggle="modal" data-target="#perpanjang" value="{{ $ang->id_ang }}" >Perpanjang</button>
+                  <button title="Perpanjang" type="button" class="btn btn-danger btn-xs Perpanjang" data-toggle="modal" data-target="#perpanjang" value="{{ $ang->id }}" >Perpanjang</button>
                   @endiF
                 </td>
                   <td align="center">
                       <div class="btn-group">
-                        <button title="Lihat" type="button" class="btn btn-info btn-xs lihatAnggota" data-toggle="modal" data-target="#detail" value="{{ $ang->id_ang }}" ><span class="fa fa-eye"></span></button>
-                        <button title="Edit" type="button" class="btn btn-warning btn-xs ubahAnggota" data-toggle="modal" data-target="#ubah" value="{{ $ang->id_ang }}"><span class="fa fa-pencil"></span></button>
-                        <button title="Hapus" type="button" class="btn btn-danger btn-xs hapusAnggota" data-toggle="modal" data-target="#delete" value="{{ $ang->id_ang }}"><span class="fa fa-trash"></span></button>
+                        <button title="Lihat" type="button" class="btn btn-info btn-xs lihatAnggota" data-toggle="modal" data-target="#detail" value="{{ $ang->id }}" ><span class="fa fa-eye"></span></button>
+                        <button title="Edit" type="button" class="btn btn-warning btn-xs ubahAnggota" data-toggle="modal" data-target="#ubah" value="{{ $ang->id }}"><span class="fa fa-pencil"></span></button>
+                        <button title="Hapus" type="button" class="btn btn-danger btn-xs hapusAnggota" data-toggle="modal" data-target="#delete" value="{{ $ang->id }}"><span class="fa fa-trash"></span></button>
                       </div>
                   </td>
                 </tr>

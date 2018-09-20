@@ -17,7 +17,7 @@ $(document).ready(function(){
             $('#formAnggotaEdit #pekerjaan').val(anggotas.pekerjaan);
             $('#formAnggotaEdit #tlp').val(anggotas.tlp);
             $('#formAnggotaEdit #paket').val(anggotas.id_paketdtl);
-            $('#formAnggotaEdit').attr('action','/pegawai/anggota/'+anggotas.id_ang);
+            $('#formAnggotaEdit').attr('action','/pegawai/anggota/'+anggotas.id);
             $('#fotoAnggotaUbah').attr('src','/images/upload/foto_anggota/'+anggotas.foto);
         })
     });

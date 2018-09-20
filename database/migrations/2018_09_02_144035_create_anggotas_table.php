@@ -15,6 +15,7 @@ class CreateAnggotasTable extends Migration
     {
         Schema::create('tb_anggota', function (Blueprint $table) {
             $table->increments('id_ang');
+            $table->char('no_ang',10)->unique();
             $table->string('nm_ang',255);
             $table->date('tgl_lahir');
             $table->text('alamat');
