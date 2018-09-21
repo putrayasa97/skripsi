@@ -22,7 +22,7 @@ class CreateAnggotasTable extends Migration
             $table->integer('jk');
             $table->string('pekerjaan', 100);
             $table->char('tlp', 15);
-            $table->integer('status');//0= tidakaktif/pepanjang, 1=anggota aktif, 2=anggota tidak aktif
+            $table->integer('status');//0= tidakaktif/pepanjang, 1=anggota aktif, 2= tidak anggota
             $table->text('foto');
             $table->integer('id_paketdtl')->unsigned();
             $table->integer('id_user')->unsigned();

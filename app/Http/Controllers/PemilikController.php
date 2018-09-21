@@ -12,7 +12,7 @@ class PemilikController extends Controller
     {
         $no=1;
         $paket = Paket::all();
-        return view('pemilik.paket.index', ['paket' => $paket, 'no'=>$no]);
+        return view('pemilik.paket.paket', ['paket' => $paket, 'no'=>$no]);
     }
 
     public function paketinsert(Request $request)

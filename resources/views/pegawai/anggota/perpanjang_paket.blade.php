@@ -58,7 +58,7 @@
                       <select id="paket" name="paket" class="form-control" required>
                         <option value="">Pilih</option>
                         @foreach ($paketdtl as $paket)
-                          <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}}({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
+                          <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}} ({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
                         @endforeach
                       </select>
                     </div>

@@ -16,10 +16,9 @@ class PegawaiController extends Controller
     public function anggota()
     {
         $no=1;
-        $anggota = Anggota::where('status',1)->get();
-        $paketdtl=PaketDetail::orderBy('id_paket')->get();
-        $tarif=PaketDetail::orderBy('id_paket')->get();
-        return view('pegawai.anggota.index', ['anggota' => $anggota, 'no'=>$no ], ['paketdtl' => $paketdtl]);
+        $anggota = Anggota::whereIn('status',[1,0])->get();
+        $paketdtl=PaketDetail::where('type_paket',1)->get();//get untuk perpanjangan paket
+        return view('pegawai.anggota.anggota', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]);
     }
 
     public function anggotaform()
@@ -107,7 +106,7 @@ class PegawaiController extends Controller
         $trans->save();
 
 
-    return redirect()->route('anggota.nonform')->with('success', 'Anggota Berhasil Terdaftar !!');
+    return redirect()->route('anggota.nonform')->with('success', 'Transaksi non-Anggota berhasil !!');
     }
 
     public function anggotaedit($id)
@@ -169,12 +168,19 @@ class PegawaiController extends Controller
         $anggota->date_expiry=$expiry;
         $anggota->status=1;
         $anggota->save();
+
+        $trans = new Transaksi;
+        $trans->id_ang=$id;
+        $trans->id_paketdtl=$request->paket;
+        $trans->harga = $paket->harga;
+        $trans->save();
         return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
     }
 
     public function transaksi(){
-
-        return view('pegawai.transaksi.index');
+        $no=1;
+        $transaksi=Transaksi::orderBy('created_at','desc')->get();
+        return view('pegawai.transaksi.transaksi', ['transaksi'=>$transaksi, 'no'=>$no]);
     }
 
 }
