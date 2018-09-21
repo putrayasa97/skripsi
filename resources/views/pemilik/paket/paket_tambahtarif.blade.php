@@ -17,6 +17,9 @@
                     <div class="col-md-6 col-sm-6 col-xs-12 input-group">
                         <select id="langganan" name="langganan" class="form-control" required>
                             <option value="" selected disabled>-- Pilih --</option>
+                            @if ($count==0)
+                             <option value="0">Perdatang</option>
+                            @endif
                              @for ($i=1; $i <= 12; $i++)
                                 <option value="{{$i}}">{{$i}} Bulan</option>
                             @endfor

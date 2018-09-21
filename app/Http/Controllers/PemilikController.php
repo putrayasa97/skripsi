@@ -11,25 +11,8 @@ class PemilikController extends Controller
     public function paket()
     {
         $no=1;
-        /*$getPerdatang='null';
-        $count = Paket::where('type_paket',0)->count();//menjumlahkan type paket nilai '0'
-        if(empty($count)){//jika jumlah paket dengan nilai no kosong
-        //dd($count);
-            $paket = Paket::where('type_paket',1)->get(); //maka get paket dengan type paket '1'
-        }else{ //jika tidak
-            $get = Paket::where('type_paket',0)->get();//maka get  paket dengan type paket '0'
-            $getPerdatang=PaketDetail::find($get[0]->id_paket); // dan get paketdtl dengan id_paket dengan type paket '0'
-        }*/
-        $count = PaketDetail::where('type_paket',0)->count();//menjumlahkan type paket nilai '0'
-        //dd($count);
-        if(!empty($count)){
-            $paketdtl = PaketDetail::where('type_paket','=',0)->get();//get type paket = 1
-        }//else{
-           // $paketdtl = PaketDetail::where('type_paket','=',0)->get();//get type paket = 0
-        //}
-        $paket = Paket::where('nm_paket','!=','Perdatang')->get();//get paket tidak sama dengan Perdatang
-        $paketdtl = PaketDetail::where('type_paket','=',1)->get();
-        return view('pemilik.paket.index', ['paket' => $paket, 'no'=>$no,  'getPerdatang'=>$paketdtl, 'count'=>$count]);
+        $paket = Paket::all();
+        return view('pemilik.paket.index', ['paket' => $paket, 'no'=>$no]);
     }
 
     public function paketinsert(Request $request)
@@ -82,12 +65,16 @@ class PemilikController extends Controller
     }
 
     public function inserttarif(Request $request){
-        $paketdtl= new PaketDetail;
-        $paketdtl->harga=$request->harga;
-        $paketdtl->bulan=$request->langganan;
-        $paketdtl->id_paket=$request->id_paket;
-        $paketdtl->type_paket=1;
-        $paketdtl->save();
+            $paketdtl= new PaketDetail;
+            $paketdtl->harga=$request->harga;
+            $paketdtl->bulan=$request->langganan;
+            $paketdtl->id_paket=$request->id_paket;
+            if($request->langganan!=0){
+                $paketdtl->type_paket=1;
+            }else{
+                $paketdtl->type_paket=0;
+            }
+            $paketdtl->save();
 
         return redirect()->route('paket.edittarif', $paketdtl->id_paket)->with('success', 'Tarif Paket Berhasil Ditambah !!');
     }
@@ -95,9 +82,10 @@ class PemilikController extends Controller
     public function edittarif($id)
     {
         $no=1;
+        $count = PaketDetail::where('type_paket',0)->where('id_paket', '=', $id)->count();
         $paket = Paket::find($id);
         $paketdtl = PaketDetail::where('id_paket', '=', $id)->get();
-        return view('pemilik.paket.paket_ubahtarif', ['paketdtl' => $paketdtl, 'no'=>$no, 'paket' => $paket]);
+        return view('pemilik.paket.paket_ubahtarif', ['paketdtl' => $paketdtl, 'no'=>$no, 'paket' => $paket, 'count'=>$count]);
     }
 
     public function gettarif($id){
@@ -124,29 +112,5 @@ class PemilikController extends Controller
     return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Dihapus !!');
     }
 
-    public function insertperdatang(Request $request){
-        $paket = new Paket;
-        $paket->nm_paket='Perdatang';
-        $paket->save();//insert tarif perdatang di table Paket
-        $get = Paket::where('nm_paket','=','Perdatang')->get();//get paket dengan typepaket '0'
-        $paketdtl= new PaketDetail;
-        $paketdtl->id_paket=$get[0]->id_paket;//hasil get data paket di_paket diberikan ke paketdtl FKid_paket
-        $paketdtl->harga=$request->harga;
-        $paketdtl->bulan=0;
-        $paketdtl->type_paket=0;//type paket '0' berati Tarif Perdatang
-        $paketdtl->save();
 
-    return redirect()->route('paket')->with('success', 'Tarif Perdatang Berhasil Diubah !!');
-    }
-    public function getperdatang(){
-        $paketdtl = PaketDetail::where('type_paket','=',0)->get();
-        return \Response::json($paketdtl);
-    }
-    public function updateperdatang($id, Request $request){
-
-        $paketdtl=PaketDetail::find($id);
-        $paketdtl->harga=$request->harga;
-        $paketdtl->save();
-        return redirect()->route('paket')->with('success', 'Tarif Perdatang Berhasil Diubah !!');
-    }
 }

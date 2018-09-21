@@ -27,7 +27,13 @@
                 <tr>
                   <td align="center">{{ $no++}}</td>
                   <td>Rp. {{number_format($tarif->harga,0,',','.')}} ,-</td>
-                  <td>{{ $tarif->bulan }} Bulan</td>
+                  <td>
+                  @if ($tarif->bulan==0)
+                    Tarif Perdatang
+                  @else
+                    {{ $tarif->bulan }} Bulan
+                  @endif
+                  </td>
                   <td align="center">
                       <div class="btn-group">
                         <button title="Edit" type="button" class="btn btn-warning btn-xs ubahTarif" data-toggle="modal" data-target="#ubah" value="{{ $tarif->id_paketdtl }}"><span class="fa fa-pencil"></span></button>

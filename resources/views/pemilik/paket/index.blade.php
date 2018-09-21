@@ -10,11 +10,6 @@
         </div>
         <div class="x_content">
         <button title="Tambah" type="button" class="btn btn-success" data-toggle="modal" data-target="#add"><span class="fa fa-plus"></span> Tambah Paket</button>
-        @if ($count==0)
-            <button title="Tambah" type="button" class="btn btn-success" data-toggle="modal" data-target="#perdatang"><span class="fa fa-plus"></span> Tarif Perdatang</button>
-        @elseif(($count==1))
-            <button title="Ubah" type="button" class="btn btn-warning ubahPerdatang" data-toggle="modal" data-target="#ubahperdatang" value="{{ $getPerdatang[0]->id_paketdtl}}"><span class="fa fa-pencil"></span> Ubah Tarif Perdatang</button>
-        @endif
 
         <div class="ln_solid"></div>
         <!--Table-->
@@ -53,6 +48,4 @@
   @include('pemilik.paket.paket_detail')
   @include('pemilik.paket.paket_ubah')
   @include('pemilik.paket.paket_delete')
-  @include('pemilik.paket.paket_tambahperdatang')
-  @include('pemilik.paket.paket_ubahperdatang')
 @endsection

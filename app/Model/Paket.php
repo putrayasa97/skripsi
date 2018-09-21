@@ -5,6 +5,7 @@ namespace App\model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Paket extends Model
 {
     use SoftDeletes;
