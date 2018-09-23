@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('dashboard');
 });
 Route::get('/pegawai/anggota', 'PegawaiController@anggota')->name('anggota');
+Route::get('/pegawai/anggotanon', 'PegawaiController@anggotanon')->name('anggotanon');
 Route::get('/pegawai/anggota/form', 'PegawaiController@anggotaform')->name('anggota.form');
 Route::get('/pegawai/anggota/nonform', 'PegawaiController@anggotanonform')->name('anggota.nonform');
 Route::post('/pegawai/anggota/insertnonanggota', 'PegawaiController@anggotanoninsert')->name('anggota.noninsert');

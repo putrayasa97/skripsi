@@ -20,7 +20,6 @@ class CreatePaketdetailTable extends Migration
             $table->integer('type_paket');//type paket untuk membedakan paket dengan Tarif perdatang dengan 0=pedatang 1=paket
             $table->integer('id_paket')->unsigned();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('id_paket')->references('id_paket')->on('tb_paket');
         });

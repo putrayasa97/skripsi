@@ -29,7 +29,6 @@ class CreateAnggotasTable extends Migration
             $table->timestamp('date_actv')->nullable($value = true);
             $table->timestamp('date_expiry')->nullable($value = true);
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('id_user')->references('id_user')->on('tb_user');
             $table->foreign('id_paketdtl')->references('id_paketdtl')->on('tb_paketdetail');

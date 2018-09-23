@@ -15,12 +15,10 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('tb_transaksi', function (Blueprint $table) {
             $table->increments('id_trans');
-            $table->integer('id_paketdtl')->unsigned();
             $table->integer('id_ang')->unsigned();
             $table->integer('harga');
             $table->timestamps();
 
-            $table->foreign('id_paketdtl')->references('id_paketdtl')->on('tb_paketdetail');
             $table->foreign('id_ang')->references('id_ang')->on('tb_anggota');
         });
     }

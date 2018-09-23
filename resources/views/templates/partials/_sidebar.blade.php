@@ -23,12 +23,13 @@
             <li><a href="{{ route('anggota.form') }}">Form Anggota</a></li>
             <li><a href="{{ route('anggota.nonform') }}">Form Non-Anggota</a></li>
             <li><a href="{{ route('anggota') }}">Daftar Anggota</a></li>
+            <li><a href="{{ route('anggotanon') }}">Daftar Non-Anggota</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-home"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{{ route('paket') }}">Paket</a></li>
-            <li><a href="{{ route('transaksi') }}">Pembayaran</a></li>
+            <li><a href="{{ route('transaksi') }}">History Transaksi</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-home"></i> Laporan </span></a></li>

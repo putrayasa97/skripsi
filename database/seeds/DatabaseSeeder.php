@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('tb_paket')
         ->insert([
-            ['nm_paket' => 'Perdatang'],
+            ['nm_paket' => 'Zumba'],
             ['nm_paket' => 'Fitnes']
         ]);
 

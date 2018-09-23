@@ -48,8 +48,6 @@
                   <td align="center">
                       <div class="btn-group">
                         <button title="Lihat" type="button" class="btn btn-info btn-xs lihatAnggota" data-toggle="modal" data-target="#detail" value="" ><span class="fa fa-eye"></span></button>
-                        <button title="Edit" type="button" class="btn btn-warning btn-xs ubahAnggota" data-toggle="modal" data-target="#ubah" value=""><span class="fa fa-pencil"></span></button>
-                        <button title="Hapus" type="button" class="btn btn-danger btn-xs hapusAnggota" data-toggle="modal" data-target="#delete" value=""><span class="fa fa-trash"></span></button>
                       </div>
                   </td>
                 </tr>
