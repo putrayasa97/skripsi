@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/registrasi', 'RegistrasiController@registrasi')->name('reg');
+Route::post('/registrasi', 'RegistrasiController@insertregistrasi')->name('reg.insert');
 
 Route::get('/', function () {
     return view('dashboard');

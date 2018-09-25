@@ -15,12 +15,11 @@ class DatabaseSeeder extends Seeder
 
         DB::table('tb_leveluser')
         ->insert([
-            ['nm_level' => 'Administator'],
             ['nm_level' =>'Pemilik Fitness'],
             ['nm_level' =>'Pegawai Fitness']
 
         ]);
-
+            /*
         DB::table('tb_user')
         ->insert([
             ['username' => 'admin','email'=> 'admin@cloud.com','password'=>bcrypt('admin') ,'id_level' => '1'],
@@ -38,6 +37,6 @@ class DatabaseSeeder extends Seeder
         ->insert([
             ['harga' => 0,'bulan'=>0, 'id_paket'=>1, 'type_paket'=>0],
             ['harga' => 50000,'bulan'=>1, 'id_paket'=>2, 'type_paket'=>1],
-        ]);
+        ]);*/
     }
 }

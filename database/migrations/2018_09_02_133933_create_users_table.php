@@ -19,10 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->integer('id_level')->unsigned();
+            $table->integer('id_userdtl')->unsigned();
+            $table->integer('id_usaha')->unsigned();
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('id_level')->references('id_level')->on('tb_leveluser');
+            $table->foreign('id_userdtl')->references('id_userdtl')->on('tb_userdetail');
+            $table->foreign('id_usaha')->references('id_usaha')->on('tb_usaha');
         });
     }
 
