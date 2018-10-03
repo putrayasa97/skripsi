@@ -1,4 +1,4 @@
-@extends('templates.default')
+@extends('layouts.pegawai')
 @section('title', 'Transaksi')
 @section('content')
  <div class="row">

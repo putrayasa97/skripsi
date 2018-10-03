@@ -8,6 +8,16 @@ use App\model\PaketDetail;
 
 class PemilikController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:user');//middleware dengan uard user
+        $this->middleware('user:1');//middleware denga user 1 = pemilik
+
+    }
+    public function dashpemilik()
+    {
+        return view('dashboard.dash_pemilik');
+    }
     public function paket()
     {
         $no=1;

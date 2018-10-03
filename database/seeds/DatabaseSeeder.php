@@ -19,12 +19,19 @@ class DatabaseSeeder extends Seeder
             ['nm_level' =>'Pegawai Fitness']
 
         ]);
+        DB::table('tb_service')
+        ->insert([
+            ['nm_service' =>'Free', 'data_limit'=>'50', 'harga'=>'0', 'type_service'=>'0'],
+            ['nm_service' =>'Basic', 'data_limit'=>'250', 'harga'=>'25000', 'type_service'=>'0'],
+            ['nm_service' =>'Premium', 'data_limit'=>'500', 'harga'=>'50000', 'type_service'=>'0']
+
+        ]);
+
             /*
         DB::table('tb_user')
         ->insert([
-            ['username' => 'admin','email'=> 'admin@cloud.com','password'=>bcrypt('admin') ,'id_level' => '1'],
-            ['username' => 'pemilik','email'=> 'pemilik@cloud.com','password'=>bcrypt('pemilik') ,'id_level' => '2'],
-            ['username' => 'pegawai','email'=> 'pegawai@cloud.com','password'=>bcrypt('pegawai') ,'id_level' => '3'],
+            ['username' => 'pemilik','email'=> 'pemilik@cloud.com','password'=>bcrypt('pemilik') ,'id_level' => '1'],
+            ['username' => 'pegawai','email'=> 'pegawai@cloud.com','password'=>bcrypt('pegawai') ,'id_level' => '2'],
         ]);
 
         DB::table('tb_paket')

@@ -23,7 +23,10 @@ class CreateUsahaTable extends Migration
             $table->string('web');
             $table->char('tlp', 15);
             $table->text('logo');
+            $table->integer('id_service')->unsigned();
             $table->timestamps();
+
+            $table->foreign('id_service')->references('id_service')->on('tb_service');
         });
     }
 

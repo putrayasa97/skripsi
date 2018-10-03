@@ -13,7 +13,16 @@ use App\Model\Transaksi;
 
 class PegawaiController extends Controller
 {
-    public function anggota()
+    public function __construct()
+    {
+        $this->middleware('auth:user');//middleware guard user dapat login sesuai guard user
+        $this->middleware('user:2,1');//middleware denga user 2 = pegawai
+    }
+    public function dashpegawai()
+    {
+        return view('dashboard.dash_pegawai');
+    }
+    public function anggota()// menampilkan data anggota aktif
     {
         $no=1;
         $anggota = Anggota::whereIn('status',[1,0])->get();
@@ -21,36 +30,36 @@ class PegawaiController extends Controller
         return view('pegawai.anggota.anggota', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]);
     }
 
-    public function anggotanon()
+    public function anggotanon()// menampilkan data anggota yang tidak aktif
     {
         $no=1;
-        $anggota = Anggota::whereIn('status',[2])->get();
-        $paketdtl=PaketDetail::where('type_paket',1)->get();
-        return view('pegawai.anggota.anggotanon', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]);
+        $anggota = Anggota::whereIn('status',[2])->get();//query untuk memanggil anggota dengan status 2 yang berarti non anggota
+        $paketdtl=PaketDetail::where('type_paket',1)->get();//query untuk memanggil detail paket dengan tipe_paket 1
+        return view('pegawai.anggota.anggotanon', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]); //data di kembalikan
     }
 
-    public function anggotaform()
+    public function anggotaform()// menampilkan form anggota atau from pendaftaran
     {
         $paketdtl=PaketDetail::where('type_paket',1)->orderBy('id_paket')->get();//get paket bulan dengan kode 1
        // dd($paketdtl);
-        return view('pegawai.anggota.anggota_tambah',  ['paketdtl' => $paketdtl]);
+        return view('pegawai.anggota.anggota_tambah',  ['paketdtl' => $paketdtl]);// mengembalikan data
     }
 
-    public function anggotanonform()
+    public function anggotanonform()// menampilkan form no anggota
     {
-        $paketdtl=PaketDetail::where('type_paket',0)->get();
+        $paketdtl=PaketDetail::where('type_paket',0)->get();//query untuk memanggil PaketDetail
        // dd($paketdtl);
-        return view('pegawai.anggota.anggota_nontambah',  ['paketdtl' => $paketdtl]);
+        return view('pegawai.anggota.anggota_nontambah',  ['paketdtl' => $paketdtl]);// mengembalikan data
     }
 
-    public function anggotainsert(Request $request)
+    public function anggotainsert(Request $request)//menambah data anggota
     {
         $id=date('y') . rand(0, 9999);
         $now=Carbon::now('Asia/Singapore');
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
-        $paket=PaketDetail::find($request->paket);
+        $paket=PaketDetail::find($request->paket);// memanggil paket detail berdasarkan id paket
         $anggotas = new Anggota;
         $anggotas->no_ang = $id;
         $anggotas->nm_ang = $request->nama;
@@ -74,23 +83,23 @@ class PegawaiController extends Controller
         }
         $file->move('images/upload/foto_anggota/',$filename);
         $anggotas->foto=$filename;
-        $anggotas->save();
+        $anggotas->save();// menyimpan data anggota
         //dd($id);
-        $get=Anggota::where('no_ang','=',$id)->first();
+        $get=Anggota::where('no_ang','=',$id)->first();// memanggil berdasarkan field no_ang
         $trans = new Transaksi;
         $trans->id_ang=$get->id_ang;
         $trans->harga = $paket->harga;
-        $trans->save();
+        $trans->save();// menyimpan transaksi dari anggota
     return redirect()->route('anggota.form')->with('success', 'Anggota Berhasil Terdaftar !!');
     }
 
-    public function anggotanoninsert(Request $request)
+    public function anggotanoninsert(Request $request)// menambah yang bukan anggota
     {
         $id=date('y') . rand(0, 9999);
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
-        $paket=PaketDetail::find($request->paket);
+        $paket=PaketDetail::find($request->paket);// memanggil paket detail
         $anggotas = new Anggota;
         $anggotas->no_ang = $id;
         $anggotas->nm_ang = $request->nama;
@@ -103,25 +112,26 @@ class PegawaiController extends Controller
         $anggotas->id_user = 2;
         $anggotas->id_paketdtl = $request->paket;
         $anggotas->foto = "0";
-        $anggotas->save();
+        $anggotas->save();// menyimpan data yang bukan anggota
 
-        $get=Anggota::where('no_ang','=',$id)->first();
+        $get=Anggota::where('no_ang','=',$id)->first();// memanggil no_ang berdasarkan id
         $trans = new Transaksi;
         $trans->id_ang=$get->id_ang;
         $trans->harga = $paket->harga;
-        $trans->save();
+        $trans->save();// menyimpan transaksi bukan anggota
 
 
     return redirect()->route('anggota.nonform')->with('success', 'Transaksi non-Anggota berhasil !!');
     }
 
-    public function anggotaedit($id)
+    public function anggotaedit($id)// untuk memanggil data anggota
     {
-        $anggotas=Anggota::find($id);
-    return \Response::json($anggotas);
+        $anggotas=Anggota::find($id);// memanggil anggota berdasarkan id
+    return \Response::json($anggotas);// data di kembalikan dengan json
     }
 
-    public function anggotaupdate(Request $request, $id){
+    public function anggotaupdate(Request $request, $id)// proses update data anggota
+    {
         $this->validate($request, [
             'success' => 'berhasil'
         ]);
@@ -152,19 +162,21 @@ class PegawaiController extends Controller
            //->save('images/upload/foto_anggota/thumbs/'.$filename,100);
             $anggota->foto=$filename;
             }
-        $anggota->save();
+        $anggota->save();// meyimpan update anggota
 
     return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Diubah !!');
     }
 
-    public function anggotadelete($id){
+    public function anggotadelete($id)// fungsi untuk menghapus anggota
+    {
         $anggota=Anggota::find($id);
         $anggota->delete();
 
         return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Dihapus !!');
     }
 
-    public function anggotaperpanjang(Request $request, $id){
+    public function anggotaperpanjang(Request $request, $id)// fungsi untuk memperpanjang anggota
+    {
         $now=Carbon::now('Asia/Singapore');
         $paket=PaketDetail::find($request->paket);
         $anggota=Anggota::find($id);
@@ -182,9 +194,10 @@ class PegawaiController extends Controller
         return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
     }
 
-    public function transaksi(){
+    public function transaksi()//memanggil transaksi
+    {
         $no=1;
-        $transaksi=Transaksi::orderBy('created_at','desc')->get();
+        $transaksi=Transaksi::orderBy('created_at','desc')->get();// memanggil data transaksi berurutan dari besal ke kecil berdasarkan created_at
         return view('pegawai.transaksi.transaksi', ['transaksi'=>$transaksi, 'no'=>$no]);
     }
 

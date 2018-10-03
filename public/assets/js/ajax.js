@@ -150,6 +150,25 @@ $(document).ready(function(){
     });
 });
 
+$('body').on('click', '.ubahService', function () {
+    var link_id = $(this).val();
+    $.get('/admin/service/edit/' + link_id, function (services) {
+        console.log(services);
+        $('#formServiceUbah #nm_service').val(services.nm_service);
+        $('#formServiceUbah #data_limit').val(services.data_limit);
+        $('#formServiceUbah #harga').val(services.harga);
+        $('#formServiceUbah #type_service').val(services.type_service);
+        $('#formServiceUbah').attr('action','/admin/service/'+services.id_service);
+    })
+});
+$('body').on('click', '.hapusService', function () {
+    var link_id = $(this).val();
+    $.get('/admin/service/edit/' + link_id, function (services) {
+        //console.log(pakets);
+        $('#ServiceDelete #id_service').val(services.id_service);
+        $('#ServiceDelete').attr('action','/admin/service/delete/'+services.id_service);
+    })
+});
 
 //hidden alert
 $(".alert").fadeOut(4000);

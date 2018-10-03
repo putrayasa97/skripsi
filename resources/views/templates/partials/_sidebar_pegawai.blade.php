@@ -18,6 +18,7 @@
     <div class="menu_section">
       <h3>General</h3>
       <ul class="nav side-menu">
+        <li><a href="{{ route('dash.pegawai') }}"><i class="fa fa-home"></i> Dashboard </a></li>
         <li><a><i class="fa fa-home"></i> Anggota <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="{{ route('anggota.form') }}">Form Anggota</a></li>
@@ -28,9 +29,6 @@
         </li>
         <li><a><i class="fa fa-home"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-              @if (Auth::user()->id_level == 1)
-                <li><a href="{{ route('paket') }}">Paket</a></li>
-              @endif()
             <li><a href="{{ route('transaksi') }}">History Transaksi</a></li>
           </ul>
         </li>

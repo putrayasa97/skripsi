@@ -1,4 +1,4 @@
-@extends('templates.default')
+@extends('layouts.pegawai')
 @section('title', 'Anggota')
 @section('content')
  <div class="row">
@@ -9,7 +9,6 @@
           <div class="clearfix"></div>
         </div>
         <div class="x_content">
-
           <!--Table-->
           <table id="datatable" class="table table-striped table-bordered">
             <thead>

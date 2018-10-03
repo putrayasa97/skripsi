@@ -1,4 +1,4 @@
-@extends('templates.default')
+@extends('layouts.pemilik')
 @section('title', 'Paket')
 @section('content')
  <div class="row">

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email');
             $table->string('password');
-            $table->integer('id_level')->unsigned();
+            $table->integer('id_level')->unsigned();//1:Pemilik 2:Pegawai
             $table->integer('id_userdtl')->unsigned();
             $table->integer('id_usaha')->unsigned();
             $table->rememberToken();

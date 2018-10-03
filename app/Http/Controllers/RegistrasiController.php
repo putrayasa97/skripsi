@@ -34,6 +34,7 @@ class RegistrasiController extends Controller
         }
         $file->move('images/upload/logo_usaha/',$filename);
         $usaha->logo=$filename;
+        $usaha->id_service=1;
         $usaha->save();
 
         //Data Pemilik
@@ -81,7 +82,7 @@ class RegistrasiController extends Controller
         $user = new User;
         $user->username = $request->username_pemilik;
         $user->email = $request->email_pemilik;
-        $user->password = $request->password_pemilik;
+        $user->password =bcrypt($request->password_pemilik);
         $user->id_level = 1;//pemilik
         $user->id_userdtl=$getPemilik->id_userdtl;
         $user->id_usaha=$getUsaha->id_usaha;
@@ -90,7 +91,7 @@ class RegistrasiController extends Controller
         $user1 = new User;
         $user1->username = $request->username_pegawai;
         $user1->email = $request->email_pegawai;
-        $user1->password = $request->password_pegawai;
+        $user1->password = bcrypt($request->password_pegawai);
         $user1->id_level = 2;//Pegawai
         $user1->id_userdtl=$getPegawai->id_userdtl;
         $user1->id_usaha=$getUsaha->id_usaha;

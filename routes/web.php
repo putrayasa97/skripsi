@@ -10,16 +10,28 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', function () {
-    return view('login');
-});
 
+Route::get('/admin', 'AdminController@dashadmin')->name('dash.admin');
+Route::get('/admin/service', 'AdminController@service')->name('service');
+Route::post('/admin/service/insert', 'AdminController@serviceinsert')->name('service.insert');
+Route::get('/admin/service/edit/{id}', 'AdminController@serviceedit')->name('service.edit');
+Route::put('/admin/service/{id}', 'AdminController@serviceupdate')->name('service.update');
+Route::delete('/admin/service/delete/{id}', 'AdminController@servicedelete')->name('service.delete');
+
+
+Route::group(['middleware' => ['guest']], function () {
+Route::get('/login', 'LoginController@formlogin')->name('login');
+Route::get('/logout', 'LoginController@logout')->name('logout');
+Route::post('/login/post', 'LoginController@login')->name('login.post');
 Route::get('/registrasi', 'RegistrasiController@registrasi')->name('reg');
 Route::post('/registrasi', 'RegistrasiController@insertregistrasi')->name('reg.insert');
-
-Route::get('/', function () {
-    return view('dashboard');
 });
+
+
+Route::group(['middleware' => ['auth:user']], function () {
+
+Route::get('/pegawai', 'PegawaiController@dashpegawai')->name('dash.pegawai');
+
 Route::get('/pegawai/anggota', 'PegawaiController@anggota')->name('anggota');
 Route::get('/pegawai/anggotanon', 'PegawaiController@anggotanon')->name('anggotanon');
 Route::get('/pegawai/anggota/form', 'PegawaiController@anggotaform')->name('anggota.form');
@@ -34,6 +46,7 @@ Route::put('/pegawai/anggota/perpanjang/{id}', 'PegawaiController@anggotaperpanj
 Route::get('/pegawai/transaksi', 'PegawaiController@transaksi')->name('transaksi');
 
 
+Route::get('pemilik', 'PemilikController@dashpemilik')->name('dash.pemilik');
 
 Route::get('/pemilik/paket', 'PemilikController@paket')->name('paket');
 Route::post('/pemilik/paket/insert', 'PemilikController@paketinsert')->name('paket.insert');
@@ -47,3 +60,4 @@ Route::get('/pemilik/paket/gettarif/{id}', 'PemilikController@gettarif')->name('
 Route::put('/pemilik/paket/updatetarif/{id}', 'PemilikController@updatetarif')->name('paket.updatetarif');
 Route::delete('/pemilik/paket/deletetarif/{id}', 'PemilikController@deletetarif')->name('paket.deletetarif');
 
+});
