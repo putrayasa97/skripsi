@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/icon', function () {
+    return view('dashboard');
+});
 
 Route::get('/admin', 'AdminController@dashadmin')->name('dash.admin');
 Route::get('/admin/service', 'AdminController@service')->name('service');
@@ -17,6 +20,7 @@ Route::post('/admin/service/insert', 'AdminController@serviceinsert')->name('ser
 Route::get('/admin/service/edit/{id}', 'AdminController@serviceedit')->name('service.edit');
 Route::put('/admin/service/{id}', 'AdminController@serviceupdate')->name('service.update');
 Route::delete('/admin/service/delete/{id}', 'AdminController@servicedelete')->name('service.delete');
+
 
 
 Route::group(['middleware' => ['guest']], function () {
@@ -59,5 +63,10 @@ Route::get('/pemilik/paket/edittarif/{id}', 'PemilikController@edittarif')->name
 Route::get('/pemilik/paket/gettarif/{id}', 'PemilikController@gettarif')->name('paket.gettarif');
 Route::put('/pemilik/paket/updatetarif/{id}', 'PemilikController@updatetarif')->name('paket.updatetarif');
 Route::delete('/pemilik/paket/deletetarif/{id}', 'PemilikController@deletetarif')->name('paket.deletetarif');
+Route::get('/pemilik/pegawai', 'PemilikController@pegawai')->name('pegawai');
+Route::post('/pemilik/pegawai/insert', 'PemilikController@pegawaiinsert')->name('pegawai.insert');
+Route::get('/pemilik/pegawai/edit/{id}', 'PemilikController@getpegawai')->name('pegawai.getpegawai');
+Route::put('/pemilik/pegawai/{id}', 'PemilikController@pegawaiupdate')->name('pegawai.update');
+Route::delete('/pemilik/pegawai/delete/{id}', 'PemilikController@pegawaidelete')->name('pegawai.delete');
 
 });

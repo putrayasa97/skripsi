@@ -28,9 +28,7 @@
         </li>
         <li><a><i class="fa fa-home"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-              @if (Auth::user()->id_level == 1)
-                <li><a href="{{ route('paket') }}">Paket</a></li>
-              @endif()
+              <li><a href="{{ route('paket') }}">Paket</a></li>
             <li><a href="{{ route('transaksi') }}">History Transaksi</a></li>
           </ul>
         </li>

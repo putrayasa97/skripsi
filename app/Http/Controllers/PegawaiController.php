@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 //use Image;
 
 use App\Model\Anggota;
 use App\Model\PaketDetail;
 use App\Model\Transaksi;
-
 class PegawaiController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:user');//middleware guard user dapat login sesuai guard user
-        $this->middleware('user:2,1');//middleware denga user 2 = pegawai
+        $this->middleware('user:2');//middleware denga user 2 = pegawai
+
     }
     public function dashpegawai()
     {
@@ -24,8 +26,9 @@ class PegawaiController extends Controller
     }
     public function anggota()// menampilkan data anggota aktif
     {
+        $id_user = session()->get('id_user');
         $no=1;
-        $anggota = Anggota::whereIn('status',[1,0])->get();
+        $anggota = Anggota::whereIn('status',[1,0])->where('id_user',$id_user)->get();
         $paketdtl=PaketDetail::where('type_paket',1)->get();//get untuk perpanjangan paket
         return view('pegawai.anggota.anggota', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]);
     }
@@ -73,7 +76,7 @@ class PegawaiController extends Controller
         $anggotas->date_actv = $now;
         $expiry=(new Carbon($anggotas->date_actv))->addMonths($paket->bulan);
         $anggotas->date_expiry = $expiry;
-        $anggotas->id_user = 2;
+        $anggotas->id_user = auth()->guard('user')->user()->id_user;
 
         //upload foto
         $file=$request->file('foto');
@@ -109,7 +112,7 @@ class PegawaiController extends Controller
         $anggotas->pekerjaan = $request->pekerjaan;
         $anggotas->tlp = $request->tlp;
         $anggotas->status = 2;//status 2 = non-anggota
-        $anggotas->id_user = 2;
+        $anggotas->id_user =  auth()->guard('user')->user()->id_user;
         $anggotas->id_paketdtl = $request->paket;
         $anggotas->foto = "0";
         $anggotas->save();// menyimpan data yang bukan anggota

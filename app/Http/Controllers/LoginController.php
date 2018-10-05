@@ -23,8 +23,10 @@ class LoginController extends Controller
            return redirect()->back();
         }
         if(Auth::guard('user')->user()->id_level==1){
+            $request->session()->push('id_user', Auth::guard('user')->user()->id_user);
             return redirect()->route('dash.pemilik');
         }else if (Auth::guard('user')->user()->id_level==2) {
+            $request->session()->push('id_user', Auth::guard('user')->user()->id_user);
             return redirect()->route('dash.pegawai');
         }
     }

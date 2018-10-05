@@ -170,5 +170,45 @@ $('body').on('click', '.hapusService', function () {
     })
 });
 
+$('body').on('click', '.ubahPegawai', function () {
+    var link_id = $(this).val();
+    $.get('/pemilik/pegawai/edit/' + link_id, function (pegawais) {
+        $('#formPegawaiUbah #nm_lengkap').val(pegawais.nm_lengkap);
+        $('#formPegawaiUbah #tgl_lahir').val(pegawais.tgl_lahir);
+        $('#formPegawaiUbah #alamat').val(pegawais.alamat);
+        $('#formPegawaiUbah #jk').val(pegawais.jk);
+        $('#formPegawaiUbah #tlp').val(pegawais.tlp);
+        $('#formPegawaiUbah #email').val(pegawais.email);
+        $('#formPegawaiUbah #username').val(pegawais.username);
+        $('#formPegawaiUbah').attr('action','/pemilik/pegawai/'+pegawais.id_user);
+        $('#fotoPegawaiUbah').attr('src','/images/upload/foto_user/'+pegawais.foto);
+    })
+});
+
+$('body').on('click', '.lihatPegawai', function () {
+    var link_id = $(this).val();
+    $.get('/pemilik/pegawai/edit/' + link_id, function (pegawais) {
+        $('#dusername').html(pegawais.username);
+        $('#demail').html(pegawais.email);
+        $('#dnama').html(pegawais.nm_lengkap);
+        $('#dtgl_lahir').html(pegawais.tgl_lahir);
+        $('#dalamat').html(pegawais.alamat);
+        if (pegawais.jk==1) {
+            $('#djk').html("Pria");
+        } else {
+            $('#djk').html("Wanita");
+        }
+        $('#dtlp').html(pegawais.tlp);
+        $('#fotoPegawai').attr('src','/images/upload/foto_user/'+pegawais.foto);
+    })
+  });
+  $('body').on('click', '.hapusPegawai', function () {
+    var link_id = $(this).val();
+    $.get('/pemilik/pegawai/edit/' + link_id, function (pegawais) {
+        //console.log(pakets);
+        $('#PegawaiDelete').attr('action','/pemilik/pegawai/delete/'+pegawais.id_user);
+    })
+});
+
 //hidden alert
 $(".alert").fadeOut(4000);
