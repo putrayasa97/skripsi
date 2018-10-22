@@ -16,6 +16,7 @@ class CreatePaketTable extends Migration
         Schema::create('tb_paket', function (Blueprint $table) {
             $table->increments('id_paket');
             $table->string('nm_paket');
+            $table->integer('id_usaha');
             $table->timestamps();
         });
     }

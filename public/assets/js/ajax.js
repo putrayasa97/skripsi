@@ -6,7 +6,15 @@ $(document).ready(function(){
         return angka;
     }
 
-
+    $('#formAnggota').on('change', '#id_paket', function () {
+        var id = $(this).val();
+        $.get('/pegawai/anggota/getpaket/' + id, function (data) {
+            //console.log(data);
+            $('#formAnggota #nm_paket').val(data.nm_paket);
+            $('#formAnggota #harga').val("Rp. "+formatAngka(data.harga)+",-");
+            $('#formAnggota #langganan').val(data.bulan+" Bulan");
+        })
+    });
     $('body').on('click', '.ubahAnggota', function () {
         var link_id = $(this).val();
         $.get('/pegawai/anggota/edit/' + link_id, function (anggotas) {
@@ -209,6 +217,8 @@ $('body').on('click', '.lihatPegawai', function () {
         $('#PegawaiDelete').attr('action','/pemilik/pegawai/delete/'+pegawais.id_user);
     })
 });
+
+
 
 //hidden alert
 $(".alert").fadeOut(4000);
