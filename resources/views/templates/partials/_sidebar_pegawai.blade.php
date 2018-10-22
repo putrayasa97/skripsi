@@ -21,14 +21,14 @@
         <li><a href="{{ route('dash.pegawai') }}"><i class="fa fa-home"></i> Dashboard </a></li>
         <li><a><i class="fa fa-group"></i> Anggota <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
+            <li><a href="{{ route('anggota.form') }}">Form Anggota</a></li>
+            <li><a href="{{ route('anggota.nonform') }}">Form Non-Anggota</a></li>
             <li><a href="{{ route('anggota') }}">Daftar Anggota</a></li>
             <li><a href="{{ route('anggotanon') }}">Daftar Non-Anggota</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-credit-card"></i> Transaksi <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="{{ route('anggota.form') }}">Transaksi Anggota</a></li>
-            <li><a href="{{ route('anggota.nonform') }}">Transaksi Non-Anggota</a></li>
             <li><a href="{{ route('transaksi') }}">History Transaksi</a></li>
           </ul>
         </li>

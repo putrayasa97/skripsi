@@ -1,20 +1,15 @@
 @extends('layouts.pegawai')
 @section('title', 'Anggota')
 @section('content')
-<div class="page-title">
-  <div class="title_left">
-    <h2>Transaksi Anggota</h2>
-    <br/>
-  </div>
-</div>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h3>Data Anggota</h3>
+        <h2>Form Pendaftaran Anggota</h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
+      <br />
 
       <!--FORM-->
       <form id="formAnggota" class="form-horizontal form-label-left" action="{{ route('anggota.insert') }}" data-parsley-validate method="post" enctype="multipart/form-data">
@@ -75,6 +70,20 @@
                     data-parsley-validation-threshold="10" required>
                 </div>
             </div>
+
+            <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="paket">Paket Langganan <span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6 col-xs-12 input-group">
+                  <select id="paket" name="paket" class="form-control" required>
+                    <option value="">Pilih</option>
+                    @foreach ($paketdtl as $paket)
+
+                  <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}} ({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
+                    @endforeach
+
+                  </select>
+                </div>
+             </div>
              <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="foto" >Foto <span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6 col-xs-12 input-group">
@@ -83,45 +92,13 @@
                   </div>
                 </div>
             </div>
-          </div>
-        </div>
 
-        <h3 class="page-header">Paket Langganan</h3>
-        <div class="item form-group">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id_paket">Paket Langganan <span class="required">*</span></label>
-          <div class="col-md-5 col-sm-5 col-xs-12 input-group">
-            <select id="id_paket" name="paket" class="form-control" required>
-              <option value="" selected disabled>Pilih</option>
-              @foreach ($paketdtl as $paket)
-                <option value="{{ $paket->id_paketdtl }}">{{$paket->paket->nm_paket}} ({{$paket->bulan}} Bulan) - Rp {{number_format($paket->harga,0,',','.') }} ,-</option>
-              @endforeach
+          </div>
 
-            </select>
-          </div>
-       </div>
-        <div class="item form-group ">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nm_paket">Nama Paket <span class="required">*</span></label>
-          <div class="col-md-5 col-sm-5 col-xs-12 input-group">
-              <input id="nm_paket" class="form-control" name="nm_paket" type="text" required readonly>
-          </div>
         </div>
-        <div class="item form-group ">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="harga">Harga <span class="required">*</span></label>
-          <div class="col-md-5 col-sm-5 col-xs-12 input-group">
-              <input id="harga" class="form-control" name="harga" type="text" required readonly>
-          </div>
-        </div>
-        <div class="item form-group ">
-          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="langganan">Langganan <span class="required">*</span></label>
-          <div class="col-md-5 col-sm-5 col-xs-12 input-group">
-              <input id="langganan" class="form-control" name="langgnan" type="text" required readonly>
-          </div>
-        </div>
-
         <div class="ln_solid"></div>
         <div class="form-group">
           <div class="col-md-12">
-            <button type="reset" id="batal" class="btn btn-primary">Batal</button>
             <button type="submit" id="send" class="btn btn-success">Simpan</button>
           </div>
         </div>

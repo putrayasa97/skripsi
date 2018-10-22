@@ -10,7 +10,7 @@ class Paket extends Model
     protected $table='tb_paket';
     protected $primaryKey='id_paket';
 
-    protected $fillable=['nm_paket','id_usaha'];
+    protected $fillable=['nm_paket'];
 
     public function paketdtl()
     {

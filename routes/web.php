@@ -46,7 +46,6 @@ Route::get('/pegawai/anggota/edit/{id}', 'PegawaiController@anggotaedit')->name(
 Route::put('/pegawai/anggota/{id}', 'PegawaiController@anggotaupdate')->name('anggota.update');
 Route::delete('/pegawai/anggota/delete/{id}', 'PegawaiController@anggotadelete')->name('anggota.delete');
 Route::put('/pegawai/anggota/perpanjang/{id}', 'PegawaiController@anggotaperpanjang')->name('anggota.perpanjang');
-Route::get('/pegawai/anggota/getpaket/{id}', 'PegawaiController@getpaket')->name('anggota.getpaket');
 
 Route::get('/pegawai/transaksi', 'PegawaiController@transaksi')->name('transaksi');
 

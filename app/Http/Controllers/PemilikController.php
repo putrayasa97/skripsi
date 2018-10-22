@@ -14,15 +14,11 @@ use Illuminate\Support\Facades\DB;
 
 class PemilikController extends Controller
 {
-    private $id_usaha;
     public function __construct()
     {
         $this->middleware('auth:user');//middleware dengan uard user
         $this->middleware('user:1');//middleware denga user 1 = pemilik
-        $this->middleware(function ($request, $next){
-            $this->id_usaha=auth()->guard('user')->user()->id_usaha;//get auth berdasarkan id_usaha
-            return $next($request);
-        });
+
     }
     public function dashpemilik()
     {
@@ -31,7 +27,7 @@ class PemilikController extends Controller
     public function paket()
     {
         $no=1;
-        $paket = Paket::where('id_usaha', $this->id_usaha)->get();
+        $paket = Paket::all();
         return view('pemilik.paket.paket', ['paket' => $paket, 'no'=>$no]);
     }
 
@@ -41,15 +37,16 @@ class PemilikController extends Controller
             'success' => 'berhasil'
         ]);
         Paket::create([
-            'nm_paket' => $request->nm_paket,
-            'id_usaha' => $this->id_usaha
+            'nm_paket' => $request->nm_paket
         ]);
+
         return redirect()->route('paket')->with('success', 'Paket Berhasil Ditambah !!');
     }
 
     public function paketedit($id){
         $pakets=Paket::find($id);
         //$pakets=Paket::where('id_paket', '=', $id)->get();
+
         return \Response::json($pakets);
     }
 
@@ -60,15 +57,18 @@ class PemilikController extends Controller
         $paket=Paket::find($id);
         $paket->nm_paket=$request->nm_paket;
         $paket->save();
-        return redirect()->route('paket')->with('success', 'Paket Berhasil Diubah !!');
+
+    return redirect()->route('paket')->with('success', 'Paket Berhasil Diubah !!');
     }
 
     public function paketdelete($id){
-        $paketdtl=PaketDetail::where('id_paket', $id)->delete();
+
+        $paketdtl=PaketDetail::where('id_paket', '=', $id)->delete();
         $paket=Paket::find($id);
         $paket->delete();
+
         return redirect()->route('paket')->with('success', 'Paket Berhasil Dihapus !!');
-    }
+      }
 
     public function paketdetail($id)
     {
@@ -85,28 +85,23 @@ class PemilikController extends Controller
             $paketdtl->harga=$request->harga;
             $paketdtl->bulan=$request->langganan;
             $paketdtl->id_paket=$request->id_paket;
-            $paketdtl->id_usaha=$this->id_usaha;
             if($request->langganan!=0){
                 $paketdtl->type_paket=1;
             }else{
                 $paketdtl->type_paket=0;
             }
             $paketdtl->save();
-        return redirect()->route('paket.detail', $paketdtl->id_paket)->with('success', 'Tarif Paket Berhasil Ditambah !!');
+
+        return redirect()->route('paket.edittarif', $paketdtl->id_paket)->with('success', 'Tarif Paket Berhasil Ditambah !!');
     }
 
     public function edittarif($id)
     {
-        $data = Paket::find($id);
-        if($data->id_usaha == $this->id_usaha){// validasi untuk cek paket dengan id_usaha yang sama dengan yang login
-            $no=1;
-            $count = PaketDetail::where('type_paket',0)->where('id_paket', '=', $id)->where('id_usaha',$this->id_usaha)->count();
-            $paket = Paket::find($id);
-            $paketdtl = PaketDetail::where('id_paket', '=', $id)->where('id_usaha',$this->id_usaha)->get();
-            return view('pemilik.paket.paket_ubahtarif', ['paketdtl' => $paketdtl, 'no'=>$no, 'paket' => $paket, 'count'=>$count]);
-        }else{
-            return redirect()->route('paket');
-        }
+        $no=1;
+        $count = PaketDetail::where('type_paket',0)->where('id_paket', '=', $id)->count();
+        $paket = Paket::find($id);
+        $paketdtl = PaketDetail::where('id_paket', '=', $id)->get();
+        return view('pemilik.paket.paket_ubahtarif', ['paketdtl' => $paketdtl, 'no'=>$no, 'paket' => $paket, 'count'=>$count]);
     }
 
     public function gettarif($id){
@@ -122,22 +117,25 @@ class PemilikController extends Controller
         $paketdtl->bulan=$request->langganan;
         $paketdtl->harga=$request->harga;
         $paketdtl->save();
-        return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Diubah !!');
+
+    return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Diubah !!');
     }
 
     public function deletetarif($id, Request $request){
         $paketdtl=PaketDetail::find($id);
         $paketdtl->delete();
-        return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Dihapus !!');
+
+    return redirect()->route('paket.edittarif', $request->id_paket)->with('success', 'Tarif Berhasil Dihapus !!');
     }
 
     public function pegawai()
     {
+
         $no=1;
-        $pegawai=User::where('id_usaha', $this->id_usaha)->where('id_level',2)->get();// get id_level 2=pegawai berdasarkan id_usaha
+        $id_usaha=auth()->guard('user')->user()->id_usaha;
+        $pegawai=User::where('id_usaha', $id_usaha)->where('id_level',2)->get();
         return view('pemilik.pegawai.pegawai', ['pegawai' => $pegawai, 'no'=>$no]);
     }
-
     public function pegawaiinsert(Request $request)
     {
         $unix=date('y') . rand(0, 9999);
@@ -160,6 +158,7 @@ class PemilikController extends Controller
         $userdtl1->foto=$filename;
         $userdtl1->save();
 
+        $id_usaha=auth()->guard('user')->user()->id_usaha;
         $getPegawai = UserDetail::where('kode_userdtl','=',$kode_pegawai)->first();
         $user1 = new User;
         $user1->username = $request->username;
@@ -167,11 +166,10 @@ class PemilikController extends Controller
         $user1->password = bcrypt($request->password);
         $user1->id_level = 2;//Pegawai
         $user1->id_userdtl=$getPegawai->id_userdtl;
-        $user1->id_usaha=$this->id_usaha;
+        $user1->id_usaha=$id_usaha;
         $user1->save();
         return redirect()->route('pegawai')->with('success', 'Pegawai Berhasil Ditambah !!');
     }
-
     public function getpegawai($id){
         $pegawai = DB::table('tb_user')
             ->join('tb_userdetail', 'tb_user.id_userdtl', '=', 'tb_userdetail.id_userdtl')
@@ -184,7 +182,6 @@ class PemilikController extends Controller
             ->first();
         return \Response::json($pegawai);
     }
-
     public function pegawaiupdate(Request $request, $id)
     {
         $user1 = User::find($id);
@@ -213,13 +210,15 @@ class PemilikController extends Controller
         $userdtl1->save();
         return redirect()->route('pegawai')->with('success', 'Data Pegawai Berhasil Diubah!!');
     }
-
     public function pegawaidelete($id, Request $request){
-        $user1=User::where('id_user',$id)->where('id_usaha',$this->id_usaha)->first();
+        $id_usaha=auth()->guard('user')->user()->id_usaha;
+        $user1=User::where('id_user',$id)->where('id_usaha',$id_usaha)->first();
+
         Anggota::Where('id_user',$id)->delete();
+
+
         $user1->delete();
         UserDetail::where('id_userdtl',$user1->id_userdtl)->delete();
-        return redirect()->route('pegawai')->with('success', 'Pegawai Berhasil Dihapus !!');
+    return redirect()->route('pegawai')->with('success', 'Pegawai Berhasil Dihapus !!');
     }
-
 }
