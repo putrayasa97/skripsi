@@ -12,23 +12,34 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Anggota;
 use App\Model\PaketDetail;
 use App\Model\Transaksi;
+
 class PegawaiController extends Controller
 {
+    private $id_usaha;
+    private $id_user;
     public function __construct()
     {
         $this->middleware('auth:user');//middleware guard user dapat login sesuai guard user
         $this->middleware('user:2');//middleware denga user 2 = pegawai
-
+        $this->middleware(function ($request, $next){
+            $this->id_usaha=auth()->guard('user')->user()->id_usaha;//get auth berdasarkan id_usaha
+            return $next($request);
+        });
+        $this->middleware(function ($request, $next){
+            $this->id_user=auth()->guard('user')->user()->id_user;//get auth berdasarkan id_user
+            return $next($request);
+        });
     }
+
     public function dashpegawai()
     {
         return view('dashboard.dash_pegawai');
     }
+
     public function anggota()// menampilkan data anggota aktif
     {
-        $id_user = session()->get('id_user');
         $no=1;
-        $anggota = Anggota::whereIn('status',[1,0])->where('id_user',$id_user)->get();
+        $anggota = Anggota::whereIn('status',[1,0])->where('id_user',$this->id_user)->where('id_usaha',$this->id_usaha)->get();
         $paketdtl=PaketDetail::where('type_paket',1)->get();//get untuk perpanjangan paket
         return view('pegawai.anggota.anggota', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]);
     }
@@ -36,7 +47,7 @@ class PegawaiController extends Controller
     public function anggotanon()// menampilkan data anggota yang tidak aktif
     {
         $no=1;
-        $anggota = Anggota::whereIn('status',[2])->get();//query untuk memanggil anggota dengan status 2 yang berarti non anggota
+        $anggota = Anggota::whereIn('status',[2])->where('id_user',$this->id_user)->where('id_usaha',$this->id_usaha)->get();//query untuk memanggil anggota dengan status 2 yang berarti non anggota
         $paketdtl=PaketDetail::where('type_paket',1)->get();//query untuk memanggil detail paket dengan tipe_paket 1
         return view('pegawai.anggota.anggotanon', ['anggota' => $anggota, 'no'=>$no, 'paketdtl' => $paketdtl]); //data di kembalikan
     }
@@ -50,7 +61,7 @@ class PegawaiController extends Controller
 
     public function anggotanonform()// menampilkan form no anggota
     {
-        $paketdtl=PaketDetail::where('type_paket',0)->get();//query untuk memanggil PaketDetail
+        $paketdtl=PaketDetail::where('type_paket',0)->where('id_usaha',$this->id_usaha)->get();//query untuk memanggil PaketDetail
        // dd($paketdtl);
         return view('pegawai.anggota.anggota_nontambah',  ['paketdtl' => $paketdtl]);// mengembalikan data
     }
@@ -76,7 +87,8 @@ class PegawaiController extends Controller
         $anggotas->date_actv = $now;
         $expiry=(new Carbon($anggotas->date_actv))->addMonths($paket->bulan);
         $anggotas->date_expiry = $expiry;
-        $anggotas->id_user = auth()->guard('user')->user()->id_user;
+        $anggotas->id_user = $this->id_user;
+        $anggotas->id_usaha = $this->id_usaha;
 
         //upload foto
         $file=$request->file('foto');
@@ -92,8 +104,10 @@ class PegawaiController extends Controller
         $trans = new Transaksi;
         $trans->id_ang=$get->id_ang;
         $trans->harga = $paket->harga;
+        $trans->id_user = $this->id_user;
+        $trans->id_usaha = $this->id_usaha;
         $trans->save();// menyimpan transaksi dari anggota
-    return redirect()->route('anggota.form')->with('success', 'Anggota Berhasil Terdaftar !!');
+        return redirect()->route('anggota.form')->with('success', 'Anggota Berhasil Terdaftar !!');
     }
 
     public function anggotanoninsert(Request $request)// menambah yang bukan anggota
@@ -112,7 +126,8 @@ class PegawaiController extends Controller
         $anggotas->pekerjaan = $request->pekerjaan;
         $anggotas->tlp = $request->tlp;
         $anggotas->status = 2;//status 2 = non-anggota
-        $anggotas->id_user =  auth()->guard('user')->user()->id_user;
+        $anggotas->id_user = $this->id_user;
+        $anggotas->id_usaha = $this->id_usaha;
         $anggotas->id_paketdtl = $request->paket;
         $anggotas->foto = "0";
         $anggotas->save();// menyimpan data yang bukan anggota
@@ -121,16 +136,16 @@ class PegawaiController extends Controller
         $trans = new Transaksi;
         $trans->id_ang=$get->id_ang;
         $trans->harga = $paket->harga;
+        $trans->id_user = $this->id_user;
+        $trans->id_usaha = $this->id_usaha;
         $trans->save();// menyimpan transaksi bukan anggota
-
-
-    return redirect()->route('anggota.nonform')->with('success', 'Transaksi non-Anggota berhasil !!');
+        return redirect()->route('anggota.nonform')->with('success', 'Transaksi non-Anggota berhasil !!');
     }
 
     public function anggotaedit($id)// untuk memanggil data anggota
     {
         $anggotas=Anggota::find($id);// memanggil anggota berdasarkan id
-    return \Response::json($anggotas);// data di kembalikan dengan json
+        return \Response::json($anggotas);// data di kembalikan dengan json
     }
 
     public function anggotaupdate(Request $request, $id)// proses update data anggota
@@ -166,15 +181,13 @@ class PegawaiController extends Controller
             $anggota->foto=$filename;
             }
         $anggota->save();// meyimpan update anggota
-
-    return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Diubah !!');
+        return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Diubah !!');
     }
 
     public function anggotadelete($id)// fungsi untuk menghapus anggota
     {
         $anggota=Anggota::find($id);
         $anggota->delete();
-
         return redirect()->route('anggota')->with('success', 'Data Anggota Berhasil Dihapus !!');
     }
 
@@ -191,16 +204,30 @@ class PegawaiController extends Controller
         $anggota->save();
 
         $trans = new Transaksi;
-        $trans->id_ang=$id;
+        $trans->id_ang = $id;
         $trans->harga = $paket->harga;
+        $trans->id_user = $this->id_user;
+        $trans->id_usaha = $this->id_usaha;
         $trans->save();
         return redirect()->route('anggota')->with('success', 'Paket Anggota Berhasil Diperpanjang !!');
+    }
+
+    public function getpaket($id){
+
+        $paket = DB::table('tb_paketdetail')
+        ->join('tb_paket', 'tb_paket.id_paket', '=', 'tb_paketdetail.id_paket')
+        ->select(
+            'tb_paket.nm_paket','tb_paketdetail.harga', 'tb_paketdetail.bulan'
+        )
+        ->where('tb_paketdetail.id_paketdtl', $id)
+        ->first();
+        return \Response::json($paket);
     }
 
     public function transaksi()//memanggil transaksi
     {
         $no=1;
-        $transaksi=Transaksi::orderBy('created_at','desc')->get();// memanggil data transaksi berurutan dari besal ke kecil berdasarkan created_at
+        $transaksi=Transaksi::orderBy('created_at','desc')->where('id_user',$this->id_user)->where('id_usaha', $this->id_usaha)->get();// memanggil data transaksi berurutan dari besal ke kecil berdasarkan created_at
         return view('pegawai.transaksi.transaksi', ['transaksi'=>$transaksi, 'no'=>$no]);
     }
 

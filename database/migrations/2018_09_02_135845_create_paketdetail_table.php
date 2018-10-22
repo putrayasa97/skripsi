@@ -19,9 +19,12 @@ class CreatePaketdetailTable extends Migration
             $table->integer('bulan');
             $table->integer('type_paket');//type paket untuk membedakan paket dengan Tarif perdatang dengan 0=pedatang 1=paket
             $table->integer('id_paket')->unsigned();
+            $table->integer('id_user')->unsigned();
+            $table->integer('id_usaha');
             $table->timestamps();
 
             $table->foreign('id_paket')->references('id_paket')->on('tb_paket');
+            $table->foreign('id_user')->references('id_user')->on('tb_user');
         });
     }
 
